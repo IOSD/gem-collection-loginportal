@@ -27,7 +27,6 @@ admin.initializeApp({
 
 
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -44,32 +43,32 @@ app.get("/", function(req, res){
 });
 
 app.get("/secret",isLoggedIn, function(req, res){
-   
   
-
  var db = admin.database();
 var ref = db.ref("/users");
+
+  var array_keys=[];
+var array_values=[]; 
+  
+
 ref.on('value', function(snapshot) {
     snapshot.forEach(function(childSnapshot) {
       var datas = childSnapshot.val();
-  var array_keys=[];
-var array_values=[];
+  
 
 for (var key in datas) {
     array_keys.push(key);
     array_values.push(datas[key]);
 }
+      
 
-
-  res.render('secret',{data:array_values})
-  ,function (errorObject) {
+     });
+});
+res.render('secret',{data:array_values}),
+  
+  function (errorObject) {
   console.log("The read failed: " + errorObject.code);
 };
-  
-});
-});
-
-
 });
 
 // Auth Routes
