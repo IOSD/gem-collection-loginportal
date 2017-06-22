@@ -1,1 +1,25 @@
-sudo mongod --dbpath=/var/lib/mongodb
+sudo mongod --dbpath=/var/lib/mongodb --smallfiles
+
+
+app.post("/register", function(req, res){
+    User.register(new User({username: req.body.username}), req.body.password, function(err, user){
+        if(err){
+            console.log(err);
+            return res.render('register');
+        }
+        passport.authenticate("local")(req, res, function(){
+           res.redirect("/secret");
+        });
+    });
+});
+
+
+         
+          <ul class="nav navbar-nav navbar-right">
+        <li><a href="/logout"><i class="fa fa-user-times" aria-hidden="true"></i> Logout</a></li>
+        
+        
+        
+        </ul>
+        
+ 
